@@ -27,21 +27,21 @@ GAME RULES:
 
         // Clear roundScore
         roundScore = 0;
-        for (let i in [0, 1]) {
-            document.getElementById('current-' + i).textContent = 0;
+        for (let i in players) {
+            document.getElementById('current-' + i).textContent = '0';
         }
 
         // Remove active class
-        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+        playerPanelClass.remove('active');
 
         // Next player
         activePlayer = (activePlayer === 0 ? 1 : 0);
 
         // CurrentScore
-        document.querySelector('.player-' + activePlayer + '-panel').classList.add('active');
+        playerPanelClass.add('active');
 
         // Hide dice
-        document.querySelector('.dice').style.display = 'none';
+        $dice.style.display = 'none';
     }
 
     // Roll button
@@ -78,7 +78,7 @@ GAME RULES:
             // Check if player won the game
             if (scores[activePlayer] >= 100) {
                 document.getElementById('name-' + activePlayer).textContent = 'Winner';
-                document.querySelector('.dice').style.display = 'none';
+                $dice.style.display = 'none';
 
                 playerPanelClass.add('winner');
                 playerPanelClass.remove('active');

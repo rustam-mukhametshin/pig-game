@@ -108,10 +108,10 @@ GAME RULES:
             document.getElementById('score-' + i).textContent = scores[i];
             document.getElementById('current-' + i).textContent = '0';
             document.getElementById('name-' + i).textContent = 'Player ' + (parseInt(i) === 1 ? 2 : 1);
-            playerPanelClass = document.querySelector('.player-' + i + '-panel');
-            playerPanelClass.classList.remove('winner');
-            playerPanelClass.classList.add('active');
         }
+
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('active');
     }
 
 }());

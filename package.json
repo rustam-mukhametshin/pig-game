@@ -6,7 +6,7 @@
   "module": "main.js",
   "scripts": {
     "start": "browser-sync start --server src --no-notify --no-ui --cwd src --files index.html,assets/*/**",
-    "test": "editorconfig-checker --exclude '.git|node_modules|.DS_Store|README.md|LICENSE'",
+    "editorconfig": "editorconfig-checker --exclude '.git|node_modules|.DS_Store|README.md|LICENSE'",
     "html": "html-minifier --remove-comments --collapse-whitespace --input-dir src --output-dir dist --file-ext html",
     "styles": "postcss src/assets/style/index.css --use postcss-import --use postcss-csso --no-map --output dist/assets/style/index.css",
     "scripts": "npx babel src/assets/script/index.js --out-file dist/assets/script/index.js --presets=@babel/preset-env,@babel/flow",

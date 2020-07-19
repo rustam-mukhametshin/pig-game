@@ -11,6 +11,7 @@
     "styles": "postcss src/assets/style/index.css --use postcss-import --use postcss-csso --no-map --output dist/assets/style/index.css",
     "scripts": "npx babel src/assets/script/index.js --out-file dist/assets/script/index.js --presets=@babel/preset-env,@babel/flow",
     "images": "copyfiles -u 1 src/assets/img/* dist",
+    "validate": "node-w3c-validator -i ./dist/**/*.html",
     "build": "npm run html && npm run images && npm run styles && npm run scripts"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "copyfiles": "^2.3.0",
     "editorconfig-checker": "^3.1.0",
     "html-minifier": "^4.0.0",
+    "node-w3c-validator": "^1.6.2",
     "postcss-cli": "^7.1.1",
     "postcss-csso": "^4.0.0",
     "postcss-import": "^12.0.1"

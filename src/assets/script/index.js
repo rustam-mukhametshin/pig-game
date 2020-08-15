@@ -14,6 +14,25 @@ GAME RULES:
  */
 let UIController = (function () {
 
+    const DOMStrings = {
+        dice: '.dice',
+        btnRoll: '.btn-roll',
+        btnHold: '.btn-hold',
+        btnNew: '.btn-new'
+    }
+
+
+    return {
+
+        /**
+         * DOM selectors.
+         * @public
+         */
+        getDOMStrings: function () {
+            return DOMStrings;
+        }
+    }
+
 }());
 
 /**
@@ -23,14 +42,15 @@ let UIController = (function () {
  */
 let controller = (function (UICtrl) {
 
+    let DOM = UICtrl.getDOMStrings();
 
     let scores, players, roundScore, activePlayer, $dice, $btnRoll, $btnHold, $btnNew, gamePlaying, dice,
         playerPanelClass;
 
-    $dice = document.querySelector('.dice');
-    $btnRoll = document.querySelector('.btn-roll');
-    $btnHold = document.querySelector('.btn-hold');
-    $btnNew = document.querySelector('.btn-new');
+    $dice = document.querySelector(DOM.dice);
+    $btnRoll = document.querySelector(DOM.btnRoll);
+    $btnHold = document.querySelector(DOM.btnHold);
+    $btnNew = document.querySelector(DOM.btnNew);
 
     init();
 

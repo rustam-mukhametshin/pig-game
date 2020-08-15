@@ -23,25 +23,6 @@ let UIController = (function () {
  */
 let controller = (function (UICtrl) {
 
-    return {
-
-        /**
-         * Initializing application.
-         * @public
-         */
-        init: function () {
-            console.log('Application has started.');
-        }
-    }
-
-}(UIController))
-
-/**
- * Run app.
- */
-controller.init();
-
-(function () {
 
     let scores, players, roundScore, activePlayer, $dice, $btnRoll, $btnHold, $btnNew, gamePlaying, dice,
         playerPanelClass;
@@ -147,4 +128,19 @@ controller.init();
         document.querySelector('.player-' + activePlayer + '-panel').classList.add('active');
     }
 
-}());
+    return {
+        /**
+         * Initializing application.
+         * @public
+         */
+        init: function () {
+            console.log('Application has started.');
+        }
+    }
+
+}(UIController))
+
+/**
+ * Run app.
+ */
+controller.init();

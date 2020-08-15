@@ -8,6 +8,39 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game.
 */
 
+/**
+ * UI CONTROLLER
+ * @public
+ */
+let UIController = (function () {
+
+}());
+
+/**
+ * GLOBAL APP CONTROLLER
+ * @public
+ * @type {{init: controller.init}}
+ */
+let controller = (function (UICtrl) {
+
+    return {
+
+        /**
+         * Initializing application.
+         * @public
+         */
+        init: function () {
+            console.log('Application has started.');
+        }
+    }
+
+}(UIController))
+
+/**
+ * Run app.
+ */
+controller.init();
+
 (function () {
 
     let scores, players, roundScore, activePlayer, $dice, $btnRoll, $btnHold, $btnNew, gamePlaying, dice,

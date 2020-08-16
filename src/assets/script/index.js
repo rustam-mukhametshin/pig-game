@@ -14,6 +14,17 @@ GAME RULES:
  */
 let ScoreController = (function () {
 
+    return {
+        /**
+         * Random number
+         * @public
+         * @return {number}
+         */
+        getRandomNumber: function () {
+            return Math.floor(Math.random() * 6) + 1;
+        }
+    }
+
 }());
 
 /**
@@ -89,8 +100,9 @@ let controller = (function (UICtrl, ScoreCtrl) {
     // Roll button
     $btnRoll.addEventListener('click', function () {
         if (gamePlaying) {
+
             // Random number
-            dice = Math.floor(Math.random() * 6) + 1;
+            dice = ScoreCtrl.getRandomNumber();
 
             // Display the result
             $dice.style.display = 'block';

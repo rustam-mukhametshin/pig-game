@@ -9,6 +9,14 @@ GAME RULES:
 */
 
 /**
+ * SCORE CONTROLLER
+ * @public
+ */
+let ScoreController = (function () {
+
+}());
+
+/**
  * UI CONTROLLER
  * @public
  */
@@ -40,7 +48,7 @@ let UIController = (function () {
  * @public
  * @type {{init: controller.init}}
  */
-let controller = (function (UICtrl) {
+let controller = (function (UICtrl, ScoreCtrl) {
 
     let DOM = UICtrl.getDOMStrings();
 
@@ -158,7 +166,7 @@ let controller = (function (UICtrl) {
         }
     }
 
-}(UIController))
+}(UIController, ScoreController))
 
 /**
  * Run app.

@@ -63,15 +63,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
 
     let DOM = UICtrl.getDOMStrings();
 
-    let scores, players, roundScore, activePlayer, $dice, $btnRoll, $btnHold, $btnNew, gamePlaying, dice,
-        playerPanelClass;
-
-    $dice = document.querySelector(DOM.dice);
-    $btnRoll = document.querySelector(DOM.btnRoll);
-    $btnHold = document.querySelector(DOM.btnHold);
-    $btnNew = document.querySelector(DOM.btnNew);
-
-    init();
+    let scores, players, roundScore, activePlayer, gamePlaying, dice, playerPanelClass;
 
     playerPanelClass = document.querySelector('.player-' + activePlayer + '-panel').classList;
 
@@ -94,19 +86,19 @@ let controller = (function (UICtrl, ScoreCtrl) {
         playerPanelClass.add('active');
 
         // Hide dice
-        $dice.style.display = 'none';
+        document.querySelector(DOM.dice).style.display = 'none';
     }
 
     // Roll button
-    $btnRoll.addEventListener('click', function () {
+    document.querySelector(DOM.btnRoll).addEventListener('click', function () {
         if (gamePlaying) {
 
             // Random number
             dice = ScoreCtrl.getRandomNumber();
 
             // Display the result
-            $dice.style.display = 'block';
-            $dice.src = './assets/img/dice-' + dice + '.png';
+            document.querySelector(DOM.dice).style.display = 'block';
+            document.querySelector(DOM.dice).src = './assets/img/dice-' + dice + '.png';
 
             // Update the round if the rolled number was not a 1
             if (dice !== 1) {
@@ -121,7 +113,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
     })
 
     // Hold button
-    $btnHold.addEventListener('click', function () {
+    document.querySelector(DOM.btnHold).addEventListener('click', function () {
         if (gamePlaying) {
             // Add CurrentScore to global score
             scores[activePlayer] += roundScore;
@@ -132,7 +124,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
             // Check if player won the game
             if (scores[activePlayer] >= 100) {
                 document.getElementById('name-' + activePlayer).textContent = 'Winner';
-                $dice.style.display = 'none';
+                document.querySelector(DOM.dice).style.display = 'none';
 
                 playerPanelClass.add('winner');
                 playerPanelClass.remove('active');
@@ -146,7 +138,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
     })
 
     // New button
-    $btnNew.addEventListener('click', init);
+    document.querySelector(DOM.btnNew).addEventListener('click', init);
 
     // Init base settings
     function init() {
@@ -156,7 +148,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
         players = [0, 1];
         gamePlaying = true;
 
-        $dice.style.display = 'none';
+        document.querySelector(DOM.dice).style.display = 'none';
 
         for (let i in players) {
             document.getElementById('score-' + i).textContent = scores[i];

@@ -61,103 +61,106 @@ let UIController = (function () {
  */
 let controller = (function (UICtrl, ScoreCtrl) {
 
-    let DOM = UICtrl.getDOMStrings();
 
-    let scores, players, roundScore, activePlayer, gamePlaying, dice, playerPanelClass;
+    let setupEventListeners = function () {
+        let DOM = UICtrl.getDOMStrings();
 
-    playerPanelClass = document.querySelector('.player-' + activePlayer + '-panel').classList;
+        let scores, players, roundScore, activePlayer, gamePlaying, dice, playerPanelClass;
 
-    // Next player function
-    function nextPlayer() {
+        playerPanelClass = document.querySelector('.player-' + activePlayer + '-panel').classList;
 
-        // Clear roundScore
-        roundScore = 0;
-        for (let i in players) {
-            document.getElementById('current-' + i).textContent = '0';
-        }
+        // Next player function
+        function nextPlayer() {
 
-        // Remove active class
-        playerPanelClass.remove('active');
-
-        // Next player
-        activePlayer = (activePlayer === 0 ? 1 : 0);
-
-        // CurrentScore
-        playerPanelClass.add('active');
-
-        // Hide dice
-        document.querySelector(DOM.dice).style.display = 'none';
-    }
-
-    // Roll button
-    document.querySelector(DOM.btnRoll).addEventListener('click', function () {
-        if (gamePlaying) {
-
-            // Random number
-            dice = ScoreCtrl.getRandomNumber();
-
-            // Display the result
-            document.querySelector(DOM.dice).style.display = 'block';
-            document.querySelector(DOM.dice).src = './assets/img/dice-' + dice + '.png';
-
-            // Update the round if the rolled number was not a 1
-            if (dice !== 1) {
-                // Add score
-                document.getElementById('current-' + activePlayer).textContent = (roundScore += dice);
-
-            } else {
-                // Next player
-                nextPlayer();
+            // Clear roundScore
+            roundScore = 0;
+            for (let i in players) {
+                document.getElementById('current-' + i).textContent = '0';
             }
+
+            // Remove active class
+            playerPanelClass.remove('active');
+
+            // Next player
+            activePlayer = (activePlayer === 0 ? 1 : 0);
+
+            // CurrentScore
+            playerPanelClass.add('active');
+
+            // Hide dice
+            document.querySelector(DOM.dice).style.display = 'none';
         }
-    })
 
-    // Hold button
-    document.querySelector(DOM.btnHold).addEventListener('click', function () {
-        if (gamePlaying) {
-            // Add CurrentScore to global score
-            scores[activePlayer] += roundScore;
+        // Roll button
+        document.querySelector(DOM.btnRoll).addEventListener('click', function () {
+            if (gamePlaying) {
 
-            // Update UI
-            document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+                // Random number
+                dice = ScoreCtrl.getRandomNumber();
 
-            // Check if player won the game
-            if (scores[activePlayer] >= 100) {
-                document.getElementById('name-' + activePlayer).textContent = 'Winner';
-                document.querySelector(DOM.dice).style.display = 'none';
+                // Display the result
+                document.querySelector(DOM.dice).style.display = 'block';
+                document.querySelector(DOM.dice).src = './assets/img/dice-' + dice + '.png';
 
-                playerPanelClass.add('winner');
-                playerPanelClass.remove('active');
+                // Update the round if the rolled number was not a 1
+                if (dice !== 1) {
+                    // Add score
+                    document.getElementById('current-' + activePlayer).textContent = (roundScore += dice);
 
-                gamePlaying = false;
-            } else {
-                // Next player
-                nextPlayer();
+                } else {
+                    // Next player
+                    nextPlayer();
+                }
             }
+        })
+
+        // Hold button
+        document.querySelector(DOM.btnHold).addEventListener('click', function () {
+            if (gamePlaying) {
+                // Add CurrentScore to global score
+                scores[activePlayer] += roundScore;
+
+                // Update UI
+                document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+
+                // Check if player won the game
+                if (scores[activePlayer] >= 100) {
+                    document.getElementById('name-' + activePlayer).textContent = 'Winner';
+                    document.querySelector(DOM.dice).style.display = 'none';
+
+                    playerPanelClass.add('winner');
+                    playerPanelClass.remove('active');
+
+                    gamePlaying = false;
+                } else {
+                    // Next player
+                    nextPlayer();
+                }
+            }
+        })
+
+        // New button
+        document.querySelector(DOM.btnNew).addEventListener('click', init);
+
+        // Init base settings
+        function init() {
+            scores = [0, 0];
+            activePlayer = 0;
+            roundScore = 0;
+            players = [0, 1];
+            gamePlaying = true;
+
+            document.querySelector(DOM.dice).style.display = 'none';
+
+            for (let i in players) {
+                document.getElementById('score-' + i).textContent = scores[i];
+                document.getElementById('current-' + i).textContent = '0';
+                document.getElementById('name-' + i).textContent = 'Player ' + (parseInt(i) === 1 ? 2 : 1);
+            }
+
+            document.querySelector('.player-' + activePlayer + '-panel').classList.remove('winner');
+            document.querySelector('.player-' + activePlayer + '-panel').classList.add('active');
         }
-    })
-
-    // New button
-    document.querySelector(DOM.btnNew).addEventListener('click', init);
-
-    // Init base settings
-    function init() {
-        scores = [0, 0];
-        activePlayer = 0;
-        roundScore = 0;
-        players = [0, 1];
-        gamePlaying = true;
-
-        document.querySelector(DOM.dice).style.display = 'none';
-
-        for (let i in players) {
-            document.getElementById('score-' + i).textContent = scores[i];
-            document.getElementById('current-' + i).textContent = '0';
-            document.getElementById('name-' + i).textContent = 'Player ' + (parseInt(i) === 1 ? 2 : 1);
-        }
-
-        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('winner');
-        document.querySelector('.player-' + activePlayer + '-panel').classList.add('active');
     }
 
     return {
@@ -167,6 +170,8 @@ let controller = (function (UICtrl, ScoreCtrl) {
          */
         init: function () {
             console.log('Application has started.');
+
+            setupEventListeners();
         }
     }
 

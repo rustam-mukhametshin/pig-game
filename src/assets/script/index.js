@@ -14,17 +14,11 @@ GAME RULES:
  */
 let ScoreController = (function () {
 
-    let roundScore, activePlayer = 0;
+    let roundScore, activePlayer, dice;
+
+    activePlayer = 0;
 
     return {
-        /**
-         * Random number
-         * @public
-         * @return {number}
-         */
-        getRandomNumber: function () {
-            return Math.floor(Math.random() * 6) + 1;
-        },
 
         /**
          * Clear roundScore.
@@ -47,6 +41,18 @@ let ScoreController = (function () {
         changeActivePlayer() {
             activePlayer = (activePlayer === 0 ? 1 : 0);
         },
+        /**
+         * Get dice.
+         * @public
+         * @return {number}
+         */
+        getDice() {
+            if (typeof dice === undefined) {
+                dice = Math.floor(Math.random() * 6) + 1;
+            }
+
+            return dice;
+        }
     }
 
 }());
@@ -151,7 +157,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
             if (gamePlaying) {
 
                 // Random number
-                dice = ScoreCtrl.getRandomNumber();
+                dice = ScoreCtrl.getDice();
 
                 // Display the result
                 document.querySelector(DOM.dice).style.display = 'block';

@@ -14,6 +14,8 @@ GAME RULES:
  */
 let ScoreController = (function () {
 
+    let roundScore;
+
     return {
         /**
          * Random number
@@ -22,6 +24,13 @@ let ScoreController = (function () {
          */
         getRandomNumber: function () {
             return Math.floor(Math.random() * 6) + 1;
+        },
+
+        /**
+         * Clear roundScore.
+         */
+        clearRoundScore() {
+            roundScore = 0;
         }
     }
 
@@ -31,7 +40,7 @@ let ScoreController = (function () {
  * UI CONTROLLER
  * @public
  */
-let UIController = (function () {
+let UIController = (function (ScoreCtrl) {
 
     const DOMStrings = {
         dice: '.dice',
@@ -49,10 +58,19 @@ let UIController = (function () {
          */
         getDOMStrings: function () {
             return DOMStrings;
+        },
+        /**
+         * Clear roundScore.
+         */
+        clearScore() {
+            ScoreCtrl.clearRoundScore();
+
+            document.getElementById('current-' + 0).textContent = '0';
+            document.getElementById('current-' + 1).textContent = '0';
         }
     }
 
-}());
+}(ScoreController));
 
 /**
  * GLOBAL APP CONTROLLER
@@ -73,10 +91,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
         function nextPlayer() {
 
             // Clear roundScore
-            roundScore = 0;
-            for (let i in players) {
-                document.getElementById('current-' + i).textContent = '0';
-            }
+            UICtrl.clearScore();
 
             // Remove active class
             playerPanelClass.remove('active');

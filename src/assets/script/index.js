@@ -14,7 +14,7 @@ GAME RULES:
  */
 let ScoreController = (function () {
 
-    let roundScore;
+    let roundScore, activePlayer = 0;
 
     return {
         /**
@@ -31,7 +31,22 @@ let ScoreController = (function () {
          */
         clearRoundScore() {
             roundScore = 0;
-        }
+        },
+
+        /**
+         * Get active player.
+         * @return {number}
+         */
+        getActivePlayer() {
+            return activePlayer;
+        },
+
+        /**
+         * Change active player
+         */
+        changeActivePlayer() {
+            activePlayer = (activePlayer === 0 ? 1 : 0);
+        },
     }
 
 }());
@@ -47,6 +62,13 @@ let UIController = (function (ScoreCtrl) {
         btnRoll: '.btn-roll',
         btnHold: '.btn-hold',
         btnNew: '.btn-new'
+    }
+
+    /**
+     * Hide dice.
+     */
+    let hideDice = function () {
+        document.querySelector(DOMStrings.dice).style.display = 'none';
     }
 
 
@@ -67,6 +89,31 @@ let UIController = (function (ScoreCtrl) {
 
             document.getElementById('current-' + 0).textContent = '0';
             document.getElementById('current-' + 1).textContent = '0';
+        },
+
+        /**
+         * Next player.
+         */
+        nextPlayer() {
+            let activePlayer, playerPanelClass;
+
+            // Get active player
+            activePlayer = ScoreCtrl.getActivePlayer();
+
+            // Active player class list.
+            playerPanelClass = document.querySelector('.player-' + activePlayer + '-panel').classList;
+
+            // Remove active class
+            playerPanelClass.remove('active');
+
+            // Change active player
+            ScoreCtrl.changeActivePlayer();
+
+            // CurrentScore
+            playerPanelClass.add('active');
+
+            // Hide dice
+            hideDice();
         }
     }
 
@@ -80,31 +127,24 @@ let UIController = (function (ScoreCtrl) {
 let controller = (function (UICtrl, ScoreCtrl) {
 
 
+    /**
+     * Next player.
+     */
+    let nextPlayer = function () {
+
+        // Clear roundScore
+        UICtrl.clearScore();
+
+        // Next player
+        UICtrl.nextPlayer();
+    }
+
     let setupEventListeners = function () {
         let DOM = UICtrl.getDOMStrings();
 
         let scores, players, roundScore, activePlayer, gamePlaying, dice, playerPanelClass;
 
         playerPanelClass = document.querySelector('.player-' + activePlayer + '-panel').classList;
-
-        // Next player function
-        function nextPlayer() {
-
-            // Clear roundScore
-            UICtrl.clearScore();
-
-            // Remove active class
-            playerPanelClass.remove('active');
-
-            // Next player
-            activePlayer = (activePlayer === 0 ? 1 : 0);
-
-            // CurrentScore
-            playerPanelClass.add('active');
-
-            // Hide dice
-            document.querySelector(DOM.dice).style.display = 'none';
-        }
 
         // Roll button
         document.querySelector(DOM.btnRoll).addEventListener('click', function () {

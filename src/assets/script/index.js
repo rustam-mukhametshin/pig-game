@@ -144,17 +144,10 @@ let controller = (function (UICtrl, ScoreCtrl) {
 
 
     /**
-     * Next player.
+     * /**
+     * Event listeners for adding new item.
+     * @private
      */
-    let nextPlayer = function () {
-
-        // Clear roundScore
-        UICtrl.clearScore();
-
-        // Next player
-        UICtrl.nextPlayer();
-    }
-
     let setupEventListeners = function () {
         let DOM = UICtrl.getDOMStrings();
 
@@ -178,8 +171,11 @@ let controller = (function (UICtrl, ScoreCtrl) {
                     document.getElementById('current-' + activePlayer).textContent = (roundScore += dice);
 
                 } else {
+                    // Clear roundScore
+                    UICtrl.clearScore();
+
                     // Next player
-                    nextPlayer();
+                    UICtrl.nextPlayer();
                 }
             }
         })
@@ -203,8 +199,11 @@ let controller = (function (UICtrl, ScoreCtrl) {
 
                     gamePlaying = false;
                 } else {
+                    // Clear roundScore
+                    UICtrl.clearScore();
+
                     // Next player
-                    nextPlayer();
+                    UICtrl.nextPlayer();
                 }
             }
         })

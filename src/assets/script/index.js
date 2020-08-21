@@ -120,6 +120,16 @@ let UIController = (function (ScoreCtrl) {
 
             // Hide dice
             hideDice();
+        },
+
+        /**
+         * Display the dice with the result
+         * @public
+         */
+        displayDice() {
+            let dice = ScoreCtrl.getDice();
+            document.querySelector(DOMStrings.dice).style.display = 'block';
+            document.querySelector(DOMStrings.dice).src = './assets/img/dice-' + dice + '.png';
         }
     }
 
@@ -160,8 +170,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
                 dice = ScoreCtrl.getDice();
 
                 // Display the result
-                document.querySelector(DOM.dice).style.display = 'block';
-                document.querySelector(DOM.dice).src = './assets/img/dice-' + dice + '.png';
+                UICtrl.displayDice();
 
                 // Update the round if the rolled number was not a 1
                 if (dice !== 1) {

@@ -52,6 +52,17 @@ let ScoreController = (function () {
             }
 
             return dice;
+        },
+        /**
+         * Get round score
+         * @public
+         * @return {number}
+         */
+        getRoundScore() {
+            if (typeof roundScore === undefined) {
+                roundScore = 0;
+            }
+            return roundScore;
         }
     }
 

@@ -98,9 +98,10 @@ let UIController = (function (ScoreCtrl) {
         },
 
         /**
-         * Next player.
+         * Move to next player.
+         * @public
          */
-        nextPlayer() {
+        moveToNextPlayer() {
             let activePlayer, playerPanelClass;
 
             // Get active player
@@ -175,7 +176,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
                     UICtrl.clearScore();
 
                     // Next player
-                    UICtrl.nextPlayer();
+                    UICtrl.moveToNextPlayer();
                 }
             }
         })
@@ -203,7 +204,7 @@ let controller = (function (UICtrl, ScoreCtrl) {
                     UICtrl.clearScore();
 
                     // Next player
-                    UICtrl.nextPlayer();
+                    UICtrl.moveToNextPlayer();
                 }
             }
         })
